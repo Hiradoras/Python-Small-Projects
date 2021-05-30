@@ -1,6 +1,10 @@
+import time, sys
+
 DEAD = False
 FINISHED = False
 OUT_OF_MAZE = False
+WAIT_TIME = 1.3
+
 
 STEPS = 0
 
@@ -45,25 +49,41 @@ while not DEAD and not FINISHED:
     if not OUT_OF_MAZE:
         maze[old_y][old_x] = 0
 
+    if not OUT_OF_MAZE and maze[curr_y][curr_x] == 0:
+        maze[curr_y][curr_x] = 2
+
     if OUT_OF_MAZE:
         maze[old_y][old_x] = 'X'
         print("Game Over!\nYou are out of maze!")
+        print("####################################")
+        time.sleep(WAIT_TIME)
         DEAD = True
+        break
 
     if not OUT_OF_MAZE and maze[curr_y][curr_x]==1:
         maze[curr_y][curr_x] = "X"
         print("Game Over!")
+        print("####################################")
+        time.sleep(WAIT_TIME)
         DEAD = True
-    
+        break
+
     if not OUT_OF_MAZE and maze[curr_y][curr_x] == 3:
         maze[curr_y][curr_x] = "X"
         print(f"\nCongrats! You've made in!\nYou've completed the maze in {STEPS} steps")
+        print("####################################")
+        time.sleep(WAIT_TIME)
         FINISHED = True
-        print(curr_x, curr_y)
+        break
 
-    if not OUT_OF_MAZE and maze[curr_y][curr_x] == 0:
-        maze[curr_y][curr_x] = 2
-        
     for i in maze:
         print(i)
 
+try:
+    while True:
+        print("Press  Ctrl + C to quit!\n")
+        for i in maze:
+            print(i)
+        time.sleep(1)
+except KeyboardInterrupt:
+    sys.exit()
